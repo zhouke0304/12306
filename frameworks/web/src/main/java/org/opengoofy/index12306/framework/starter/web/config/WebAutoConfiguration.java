@@ -33,13 +33,13 @@ import org.springframework.web.client.RestTemplate;
 public class WebAutoConfiguration {
 
     public final static String INITIALIZE_PATH = "/initialize/dispatcher-servlet";
-
+    //全局异常拦截器
     @Bean
     @ConditionalOnMissingBean
     public GlobalExceptionHandler globalExceptionHandler() {
         return new GlobalExceptionHandler();
     }
-
+    //http请求接收工具
     @Bean
     public InitializeDispatcherServletController initializeDispatcherServletController() {
         return new InitializeDispatcherServletController();
@@ -49,7 +49,7 @@ public class WebAutoConfiguration {
     public RestTemplate simpleRestTemplate(ClientHttpRequestFactory factory) {
         return new RestTemplate(factory);
     }
-
+    //http发送工具
     @Bean
     public ClientHttpRequestFactory simpleClientHttpRequestFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
@@ -57,7 +57,7 @@ public class WebAutoConfiguration {
         factory.setConnectTimeout(5000);
         return factory;
     }
-
+    //预热请求发生组件
     @Bean
     public InitializeDispatcherServletHandler initializeDispatcherServletHandler(RestTemplate simpleRestTemplate, ConfigurableEnvironment configurableEnvironment) {
         return new InitializeDispatcherServletHandler(simpleRestTemplate, configurableEnvironment);
