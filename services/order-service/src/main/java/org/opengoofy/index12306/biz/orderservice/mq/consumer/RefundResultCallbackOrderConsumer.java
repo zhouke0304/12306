@@ -42,22 +42,21 @@ import java.util.List;
 
 /**
  * 退款结果回调订单消费者
- *
- * @公众号：马丁玩编程，回复：加群，添加马哥微信（备注：12306）获取项目资料
+ * 【监听退款成功消息，修改订单状态】
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(
-        topic = OrderRocketMQConstant.PAY_GLOBAL_TOPIC_KEY,
-        selectorExpression = OrderRocketMQConstant.REFUND_RESULT_CALLBACK_TAG_KEY,
-        consumerGroup = OrderRocketMQConstant.REFUND_RESULT_CALLBACK_ORDER_CG_KEY
+        topic = OrderRocketMQConstant.PAY_GLOBAL_TOPIC_KEY,//监听的topic为 "index12306_pay-service_topic${unique-name:}";【支付业务】
+        selectorExpression = OrderRocketMQConstant.REFUND_RESULT_CALLBACK_TAG_KEY,//监听的消息tag为 "index12306_pay-service_refund-result-callback_tag${unique-name:}";【退款消息】
+        consumerGroup = OrderRocketMQConstant.REFUND_RESULT_CALLBACK_ORDER_CG_KEY //消费者组为 "index12306_pay-service_refund-result-callback-order_cg${unique-name:}"; 【退款消费者】
 )
 public class RefundResultCallbackOrderConsumer implements RocketMQListener<MessageWrapper<RefundResultCallbackOrderEvent>> {
 
     private final OrderItemService orderItemService;
 
-    @Idempotent(
+    @Idempotent(//幂等组件，保证消息只消费一次
             uniqueKeyPrefix = "index12306-order:refund_result_callback:",
             key = "#message.getKeys()+'_'+#message.hashCode()",
             type = IdempotentTypeEnum.SPEL,
@@ -72,11 +71,13 @@ public class RefundResultCallbackOrderConsumer implements RocketMQListener<Messa
         String orderSn = refundResultCallbackOrderEvent.getOrderSn();
         List<OrderItemDO> orderItemDOList = new ArrayList<>();
         List<TicketOrderPassengerDetailRespDTO> partialRefundTicketDetailList = refundResultCallbackOrderEvent.getPartialRefundTicketDetailList();
+        //获取每个退款的车票
         partialRefundTicketDetailList.forEach(partial -> {
             OrderItemDO orderItemDO = new OrderItemDO();
             BeanUtil.convert(partial, orderItemDO);
             orderItemDOList.add(orderItemDO);
         });
+        //如果是部分车票退款
         if (status.equals(OrderStatusEnum.PARTIAL_REFUND.getStatus())) {
             OrderItemStatusReversalDTO partialRefundOrderItemStatusReversalDTO = OrderItemStatusReversalDTO.builder()
                     .orderSn(orderSn)

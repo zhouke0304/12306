@@ -62,17 +62,20 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
     @Override
     @Transactional
     public void orderItemStatusReversal(OrderItemStatusReversalDTO requestParam) {
+        //获取订单信息
         LambdaQueryWrapper<OrderDO> queryWrapper = Wrappers.lambdaQuery(OrderDO.class)
                 .eq(OrderDO::getOrderSn, requestParam.getOrderSn());
         OrderDO orderDO = orderMapper.selectOne(queryWrapper);
         if (orderDO == null) {
             throw new ServiceException(OrderCanalErrorCodeEnum.ORDER_CANAL_UNKNOWN_ERROR);
         }
+        //订单加锁
         RLock lock = redissonClient.getLock(StrBuilder.create("order:status-reversal:order_sn_").append(requestParam.getOrderSn()).toString());
         if (!lock.tryLock()) {
             log.warn("订单重复修改状态，状态反转请求参数：{}", JSON.toJSONString(requestParam));
         }
         try {
+            //修改订单状态
             OrderDO updateOrderDO = new OrderDO();
             updateOrderDO.setStatus(requestParam.getOrderStatus());
             LambdaUpdateWrapper<OrderDO> updateWrapper = Wrappers.lambdaUpdate(OrderDO.class)
@@ -81,6 +84,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemMapper, OrderItem
             if (orderUpdateResult <= 0) {
                 throw new ServiceException(OrderCanalErrorCodeEnum.ORDER_STATUS_REVERSAL_ERROR);
             }
+            //修改车票状态
             if (CollectionUtil.isNotEmpty(requestParam.getOrderItemDOList())) {
                 List<OrderItemDO> orderItemDOList = requestParam.getOrderItemDOList();
                 if (CollectionUtil.isNotEmpty(orderItemDOList)) {
