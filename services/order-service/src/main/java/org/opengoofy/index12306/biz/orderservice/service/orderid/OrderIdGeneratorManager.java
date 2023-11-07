@@ -28,9 +28,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 /**
- * 订单 ID 全局唯一生成器管理
- *
- * @公众号：马丁玩编程，回复：加群，添加马哥微信（备注：12306）获取项目资料
+ * 订单 ID 全局唯一生成器管理  将用户ID融入订单后几位  雪花ID+用户ID
  */
 @Component
 @RequiredArgsConstructor
@@ -46,7 +44,7 @@ public final class OrderIdGeneratorManager implements InitializingBean {
      * @param userId 用户名
      * @return 订单 ID
      */
-    public static String generateId(long userId) {
+    public static String generateId(long userId) { //雪花ID+用户ID
         return DISTRIBUTED_ID_GENERATOR.generateId() + String.valueOf(userId % 1000000);
     }
 

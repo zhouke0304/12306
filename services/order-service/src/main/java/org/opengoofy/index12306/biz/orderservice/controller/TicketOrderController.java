@@ -60,6 +60,7 @@ public class TicketOrderController {
 
     /**
      * 根据子订单记录id查询车票子订单详情
+     * 根据订单ID和订单项ID查询订单项
      */
     @GetMapping("/api/order-service/order/item/ticket/query")
     public Result<List<TicketOrderPassengerDetailRespDTO>> queryTicketItemOrderById(TicketOrderItemQueryReqDTO requestParam) {
@@ -67,7 +68,7 @@ public class TicketOrderController {
     }
 
     /**
-     * 分页查询车票订单
+     * 分页查询车票订单 用户查询自己的订单【根据用户ID和订单状态查询 包括该订单的订单项】
      */
     @AutoOperate(type = TicketOrderDetailRespDTO.class, on = "data.records")
     @GetMapping("/api/order-service/order/ticket/page")
@@ -77,6 +78,9 @@ public class TicketOrderController {
 
     /**
      * 分页查询本人车票订单
+     * 先根据用户名查找自己的证件号
+     * 再根据证件号查找订单号【路由表】
+     * 再根据订单号从order_item中找到车票信息 order_item就是车票表
      */
     @GetMapping("/api/order-service/order/ticket/self/page")
     public Result<PageResponse<TicketOrderDetailSelfRespDTO>> pageSelfTicketOrder(TicketOrderSelfPageQueryReqDTO requestParam) {
@@ -84,7 +88,7 @@ public class TicketOrderController {
     }
 
     /**
-     * 车票订单创建
+     * 车票订单创建  一个订单可能包含多张车票
      */
     @PostMapping("/api/order-service/order/ticket/create")
     public Result<String> createTicketOrder(@RequestBody TicketOrderCreateReqDTO requestParam) {

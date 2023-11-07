@@ -15,4 +15,6 @@
 /services/order-service/target/
 /services/pay-service/target/
 /services/ticket-service/target/
-/services/user-service/target/
+/services/user-service/target/!/.idea/misc.xml
+!/.idea/workspace.xml
+!/.idea/misc.xml

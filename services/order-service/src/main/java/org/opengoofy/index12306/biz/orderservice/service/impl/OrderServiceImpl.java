@@ -121,21 +121,22 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public String createTicketOrder(TicketOrderCreateReqDTO requestParam) {
-        // 通过基因法将用户 ID 融入到订单号
+        // 第一步，如何创建订单号
+        // 通过基因法将用户 ID 融入到订单号  雪花ID+用户ID
         String orderSn = OrderIdGeneratorManager.generateId(requestParam.getUserId());
-        OrderDO orderDO = OrderDO.builder().orderSn(orderSn)
-                .orderTime(requestParam.getOrderTime())
-                .departure(requestParam.getDeparture())
-                .departureTime(requestParam.getDepartureTime())
-                .ridingDate(requestParam.getRidingDate())
-                .arrivalTime(requestParam.getArrivalTime())
-                .trainNumber(requestParam.getTrainNumber())
-                .arrival(requestParam.getArrival())
-                .trainId(requestParam.getTrainId())
+        OrderDO orderDO = OrderDO.builder().orderSn(orderSn)//设置订单编号
+                .orderTime(requestParam.getOrderTime())//订单创建时间
+                .departure(requestParam.getDeparture())//列车出发地点
+                .departureTime(requestParam.getDepartureTime())//出发时间
+                .ridingDate(requestParam.getRidingDate())//乘车日期
+                .arrivalTime(requestParam.getArrivalTime())//到达时间
+                .trainNumber(requestParam.getTrainNumber())//列车车次
+                .arrival(requestParam.getArrival()) //到达站点
+                .trainId(requestParam.getTrainId()) //列车ID
                 .source(requestParam.getSource())
-                .status(OrderStatusEnum.PENDING_PAYMENT.getStatus())
-                .username(requestParam.getUsername())
-                .userId(String.valueOf(requestParam.getUserId()))
+                .status(OrderStatusEnum.PENDING_PAYMENT.getStatus())//订单状态：初始为待支付
+                .username(requestParam.getUsername())//用户名
+                .userId(String.valueOf(requestParam.getUserId()))//用户ID
                 .build();
         orderMapper.insert(orderDO);
         List<TicketOrderItemCreateReqDTO> ticketOrderItems = requestParam.getTicketOrderItems();
@@ -293,21 +294,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageResponse<TicketOrderDetailSelfRespDTO> pageSelfTicketOrder(TicketOrderSelfPageQueryReqDTO requestParam) {
-        Result<UserQueryActualRespDTO> userActualResp = userRemoteService.queryActualUserByUsername(UserContext.getUsername());
-        LambdaQueryWrapper<OrderItemPassengerDO> queryWrapper = Wrappers.lambdaQuery(OrderItemPassengerDO.class)
-                .eq(OrderItemPassengerDO::getIdCard, userActualResp.getData().getIdCard())
+        Result<UserQueryActualRespDTO> userActualResp = userRemoteService.queryActualUserByUsername(UserContext.getUsername());//根据用户名查询用户非脱敏信息
+        LambdaQueryWrapper<OrderItemPassengerDO> queryWrapper = Wrappers.lambdaQuery(OrderItemPassengerDO.class)//先从乘车人订单明细路由表中根据证件号找到订单号
+                .eq(OrderItemPassengerDO::getIdCard, userActualResp.getData().getIdCard())// 证件号=
                 .orderByDesc(OrderItemPassengerDO::getCreateTime);
-        IPage<OrderItemPassengerDO> orderItemPassengerPage = orderPassengerRelationService.page(PageUtil.convert(requestParam), queryWrapper);
-        return PageUtil.convert(orderItemPassengerPage, each -> {
+        IPage<OrderItemPassengerDO> orderItemPassengerPage = orderPassengerRelationService.page(PageUtil.convert(requestParam), queryWrapper);//可能得到多个订单号
+        return PageUtil.convert(orderItemPassengerPage, each -> {//对每个订单号进行处理
             LambdaQueryWrapper<OrderDO> orderQueryWrapper = Wrappers.lambdaQuery(OrderDO.class)
                     .eq(OrderDO::getOrderSn, each.getOrderSn());
-            OrderDO orderDO = orderMapper.selectOne(orderQueryWrapper);
+            OrderDO orderDO = orderMapper.selectOne(orderQueryWrapper);//根据订单号查找订单详细信息
             LambdaQueryWrapper<OrderItemDO> orderItemQueryWrapper = Wrappers.lambdaQuery(OrderItemDO.class)
                     .eq(OrderItemDO::getOrderSn, each.getOrderSn())
                     .eq(OrderItemDO::getIdCard, each.getIdCard());
-            OrderItemDO orderItemDO = orderItemMapper.selectOne(orderItemQueryWrapper);
+            OrderItemDO orderItemDO = orderItemMapper.selectOne(orderItemQueryWrapper);//根据订单号和证件号从订单项表中查找乘客对应的订单项
             TicketOrderDetailSelfRespDTO actualResult = BeanUtil.convert(orderDO, TicketOrderDetailSelfRespDTO.class);
-            BeanUtil.convertIgnoreNullAndBlank(orderItemDO, actualResult);
+            BeanUtil.convertIgnoreNullAndBlank(orderItemDO, actualResult);//填充订单项信息和订单信息
             return actualResult;
         });
     }

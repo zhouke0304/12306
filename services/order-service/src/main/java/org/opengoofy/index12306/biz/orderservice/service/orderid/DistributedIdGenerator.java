@@ -19,25 +19,23 @@ package org.opengoofy.index12306.biz.orderservice.service.orderid;
 
 /**
  * 全局唯一订单号生成器
- *
- * @公众号：马丁玩编程，回复：加群，添加马哥微信（备注：12306）获取项目资料
  */
 public class DistributedIdGenerator {
 
     private static final long EPOCH = 1609459200000L;
-    private static final int NODE_BITS = 5;
+    private static final int NODE_BITS = 5;//
     private static final int SEQUENCE_BITS = 7;
 
-    private final long nodeID;
-    private long lastTimestamp = -1L;
-    private long sequence = 0L;
+    private final long nodeID;//机器ID  5 构造时从Redis中获取
+    private long lastTimestamp = -1L;//时间戳
+    private long sequence = 0L;//序列号  7
 
     public DistributedIdGenerator(long nodeID) {
         this.nodeID = nodeID;
     }
 
-    public synchronized long generateId() {
-        long timestamp = System.currentTimeMillis() - EPOCH;
+    public synchronized long generateId() {//生成分布式ID
+        long timestamp = System.currentTimeMillis() - EPOCH;//当前时间-纪元时间戳 得到当前时间戳
         if (timestamp < lastTimestamp) {
             throw new RuntimeException("Clock moved backwards. Refusing to generate ID.");
         }
