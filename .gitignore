@@ -1,0 +1,18 @@
+# Project exclude paths
+/frameworks/base/target/
+/frameworks/bizs/user/target/
+/frameworks/cache/target/
+/frameworks/common/target/
+/frameworks/convention/target/
+/frameworks/database/target/
+/frameworks/designpattern/target/
+/frameworks/distributedid/target/
+/frameworks/idempotent/target/
+/frameworks/log/target/
+/frameworks/web/target/
+/services/aggregation-service/target/
+/services/gateway-service/target/
+/services/order-service/target/
+/services/pay-service/target/
+/services/ticket-service/target/
+/services/user-service/target/

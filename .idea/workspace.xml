@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0a0cb1ce-aed9-4c24-8fa3-e43fdd19e05d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.workflow/branch-pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.workflow/master-pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.workflow/pr-pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkstyle/12306_checkstyle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkstyle/12306_checkstyle_suppression.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/console-vue/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/console-vue/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/format/12306_spotless_formatter.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/format/license-header" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frameworks/base/src/main/java/org/opengoofy/index12306/framework/starter/bases/config/ApplicationBaseAutoConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/frameworks/base/src/main/java/org/opengoofy/index12306/framework/starter/bases/config/ApplicationBaseAutoConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frameworks/designpattern/src/main/java/org/opengoofy/index12306/framework/starter/designpattern/builder/Builder.java" beforeDir="false" afterPath="$PROJECT_DIR$/frameworks/designpattern/src/main/java/org/opengoofy/index12306/framework/starter/designpattern/builder/Builder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frameworks/designpattern/src/main/java/org/opengoofy/index12306/framework/starter/designpattern/chain/AbstractChainContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/frameworks/designpattern/src/main/java/org/opengoofy/index12306/framework/starter/designpattern/chain/AbstractChainContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frameworks/idempotent/src/main/java/org/opengoofy/index12306/framework/starter/idempotent/core/IdempotentContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/frameworks/idempotent/src/main/java/org/opengoofy/index12306/framework/starter/idempotent/core/IdempotentContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/gateway-service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services/gateway-service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ticket-service/src/main/java/org/opengoofy/index12306/biz/ticketservice/service/handler/ticket/filter/query/TrainTicketQueryParamVerifyChainFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/ticket-service/src/main/java/org/opengoofy/index12306/biz/ticketservice/service/handler/ticket/filter/query/TrainTicketQueryParamVerifyChainFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/ticket-service/src/main/java/org/opengoofy/index12306/biz/ticketservice/service/impl/TicketServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/ticket-service/src/main/java/org/opengoofy/index12306/biz/ticketservice/service/impl/TicketServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="D:/apache-maven-3.6.3" />
+        <option name="useMavenConfig" value="false" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2XF9vGxgw6p00wy1oA7m83SmX0h" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "spring.configuration.checksum": "f63146cd662b5b5f56cfc965f997511b",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.AggregationServiceApplication">
+    <configuration name="AggregationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="index12306-aggregation-service" />
+      <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.opengoofy.index12306.biz.aggregationservice.AggregationServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.data.redis.port=6379 -Dunique-name=-zhouke0304 -Dframework.cache.redis.prefix=mading_zhouke0304: -Dspring.data.redis.host=localhost -Drocketmq.name-server=localhost:9876 -Dspring.cloud.nacos.discovery.server-addr=localhost:8848" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="index12306-gateway-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.opengoofy.index12306.biz.gatewayservice.GatewayServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.data.redis.port=6379 -Dunique-name=-zhouke0304 -Dframework.cache.redis.prefix=mading_zhouke0304: -Dspring.data.redis.host=localhost -Drocketmq.name-server=localhost:9876 -Dspring.cloud.nacos.discovery.server-addr=localhost:8848" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="index12306-order-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.opengoofy.index12306.biz.orderservice.OrderServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.data.redis.port=6379 -Dunique-name=-zhouke0304 -Dframework.cache.redis.prefix=mading_zhouke0304: -Dspring.data.redis.host=localhost -Drocketmq.name-server=localhost:9876 -Dspring.cloud.nacos.discovery.server-addr=localhost:8848" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="index12306-pay-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.opengoofy.index12306.biz.payservice.PayServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.data.redis.port=6379 -Dunique-name=-zhouke0304 -Dframework.cache.redis.prefix=mading_zhouke0304: -Dspring.data.redis.host=localhost -Drocketmq.name-server=localhost:9876 -Dspring.cloud.nacos.discovery.server-addr=localhost:8848" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TicketServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="index12306-ticket-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.opengoofy.index12306.biz.ticketservice.TicketServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.data.redis.port=6379 -Dunique-name=-zhouke0304 -Dframework.cache.redis.prefix=mading_zhouke0304: -Dspring.data.redis.host=localhost -Drocketmq.name-server=localhost:9876 -Dspring.cloud.nacos.discovery.server-addr=localhost:8848" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="index12306-user-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.opengoofy.index12306.biz.userservice.UserServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.data.redis.port=6379 -Dunique-name=-zhouke0304 -Dframework.cache.redis.prefix=mading_zhouke0304: -Dspring.data.redis.host=localhost -Drocketmq.name-server=localhost:9876 -Dspring.cloud.nacos.discovery.server-addr=localhost:8848" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.AggregationServiceApplication" />
+      <item itemvalue="Spring Boot.GatewayServiceApplication" />
+      <item itemvalue="Spring Boot.OrderServiceApplication" />
+      <item itemvalue="Spring Boot.PayServiceApplication" />
+      <item itemvalue="Spring Boot.TicketServiceApplication" />
+      <item itemvalue="Spring Boot.UserServiceApplication" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0a0cb1ce-aed9-4c24-8fa3-e43fdd19e05d" name="Changes" comment="" />
+      <created>1698214189428</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1698214189428</updated>
+      <workItem from="1698214191120" duration="3672000" />
+      <workItem from="1698225996487" duration="2700000" />
+      <workItem from="1698232413384" duration="3008000" />
+      <workItem from="1698237834061" duration="439000" />
+      <workItem from="1698239072894" duration="1339000" />
+      <workItem from="1698250223073" duration="12000" />
+      <workItem from="1698412952737" duration="1890000" />
+      <workItem from="1698458871268" duration="1261000" />
+      <workItem from="1698545634933" duration="34000" />
+      <workItem from="1698546569038" duration="575000" />
+      <workItem from="1698547412984" duration="77000" />
+      <workItem from="1698548066974" duration="128000" />
+      <workItem from="1698561853827" duration="793000" />
+      <workItem from="1698630433821" duration="3040000" />
+      <workItem from="1698651998796" duration="2291000" />
+      <workItem from="1698669432280" duration="24000" />
+      <workItem from="1698672001200" duration="492000" />
+      <workItem from="1698714879165" duration="19094000" />
+      <workItem from="1698801288509" duration="347000" />
+      <workItem from="1699319052688" duration="106000" />
+      <workItem from="1699319169802" duration="390000" />
+      <workItem from="1699319584149" duration="22000" />
+      <workItem from="1699319627353" duration="436000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
