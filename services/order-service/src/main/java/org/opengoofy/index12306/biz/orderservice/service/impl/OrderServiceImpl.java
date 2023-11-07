@@ -245,6 +245,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void statusReversal(OrderStatusReversalDTO requestParam) {
+        //查询订单
         LambdaQueryWrapper<OrderDO> queryWrapper = Wrappers.lambdaQuery(OrderDO.class)
                 .eq(OrderDO::getOrderSn, requestParam.getOrderSn());
         OrderDO orderDO = orderMapper.selectOne(queryWrapper);
@@ -253,11 +254,13 @@ public class OrderServiceImpl implements OrderService {
         } else if (orderDO.getStatus() != OrderStatusEnum.PENDING_PAYMENT.getStatus()) {
             throw new ServiceException(OrderCanalErrorCodeEnum.ORDER_CANAL_STATUS_ERROR);
         }
+        //给订单加锁，保证只有一个线程能修改订单
         RLock lock = redissonClient.getLock(StrBuilder.create("order:status-reversal:order_sn_").append(requestParam.getOrderSn()).toString());
         if (!lock.tryLock()) {
             log.warn("订单重复修改状态，状态反转请求参数：{}", JSON.toJSONString(requestParam));
         }
         try {
+            //修改订单状态为已支付
             OrderDO updateOrderDO = new OrderDO();
             updateOrderDO.setStatus(requestParam.getOrderStatus());
             LambdaUpdateWrapper<OrderDO> updateWrapper = Wrappers.lambdaUpdate(OrderDO.class)
@@ -266,6 +269,7 @@ public class OrderServiceImpl implements OrderService {
             if (updateResult <= 0) {
                 throw new ServiceException(OrderCanalErrorCodeEnum.ORDER_STATUS_REVERSAL_ERROR);
             }
+            //修改车票状态为已支付
             OrderItemDO orderItemDO = new OrderItemDO();
             orderItemDO.setStatus(requestParam.getOrderItemStatus());
             LambdaUpdateWrapper<OrderItemDO> orderItemUpdateWrapper = Wrappers.lambdaUpdate(OrderItemDO.class)

@@ -37,8 +37,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 基于 SpEL 方法验证请求幂等性，适用于 MQ 场景
- *
- * @公众号：马丁玩编程，回复：加群，添加马哥微信（备注：12306）获取项目资料
+ *  使用redis缓存保存消息状态
+ *  处理
+ *  处理完成删除缓存
  */
 @RequiredArgsConstructor
 public final class IdempotentSpELByMQExecuteHandler extends AbstractIdempotentExecuteHandler implements IdempotentSpELService {

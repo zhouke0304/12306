@@ -36,21 +36,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 支付结果回调订单消费者
- * 【】
+ * 【监听支付服务发送的支付成功消息】
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(
-        topic = OrderRocketMQConstant.PAY_GLOBAL_TOPIC_KEY,
-        selectorExpression = OrderRocketMQConstant.PAY_RESULT_CALLBACK_TAG_KEY,
-        consumerGroup = OrderRocketMQConstant.PAY_RESULT_CALLBACK_ORDER_CG_KEY
+        topic = OrderRocketMQConstant.PAY_GLOBAL_TOPIC_KEY, //监听的topic为 "index12306_pay-service_topic${unique-name:}"
+        selectorExpression = OrderRocketMQConstant.PAY_RESULT_CALLBACK_TAG_KEY, //处理指定标签的消息 "index12306_pay-service_pay-result-callback_tag${unique-name:}";
+        consumerGroup = OrderRocketMQConstant.PAY_RESULT_CALLBACK_ORDER_CG_KEY //所属的消费者组为"index12306_pay-service_pay-result-callback-order_cg${unique-name:}";
 )
 public class PayResultCallbackOrderConsumer implements RocketMQListener<MessageWrapper<PayResultCallbackOrderEvent>> {
 
     private final OrderService orderService;
 
-    @Idempotent(
+    @Idempotent( //幂等组件，保证消息只被消费一次，MQ的幂等组件使用缓存实现，处理消息前使用缓存保存消息状态，处理完成后删除缓存
             uniqueKeyPrefix = "index12306-order:pay_result_callback:",
             key = "#message.getKeys()+'_'+#message.hashCode()",
             type = IdempotentTypeEnum.SPEL,
@@ -62,11 +62,11 @@ public class PayResultCallbackOrderConsumer implements RocketMQListener<MessageW
     public void onMessage(MessageWrapper<PayResultCallbackOrderEvent> message) {
         PayResultCallbackOrderEvent payResultCallbackOrderEvent = message.getMessage();
         OrderStatusReversalDTO orderStatusReversalDTO = OrderStatusReversalDTO.builder()
-                .orderSn(payResultCallbackOrderEvent.getOrderSn())
-                .orderStatus(OrderStatusEnum.ALREADY_PAID.getStatus())
-                .orderItemStatus(OrderItemStatusEnum.ALREADY_PAID.getStatus())
+                .orderSn(payResultCallbackOrderEvent.getOrderSn())//设置订单编号
+                .orderStatus(OrderStatusEnum.ALREADY_PAID.getStatus())//设置订单状态为已支付
+                .orderItemStatus(OrderItemStatusEnum.ALREADY_PAID.getStatus())//设置车票状态为已支付
                 .build();
-        orderService.statusReversal(orderStatusReversalDTO);
-        orderService.payCallbackOrder(payResultCallbackOrderEvent);
+        orderService.statusReversal(orderStatusReversalDTO);//修改订单状态为已支付，修改车票状态为已支付
+        orderService.payCallbackOrder(payResultCallbackOrderEvent);//设置订单支付时间和支付方式
     }
 }
