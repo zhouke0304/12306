@@ -77,7 +77,8 @@ public class RefundResultCallbackOrderConsumer implements RocketMQListener<Messa
             BeanUtil.convert(partial, orderItemDO);
             orderItemDOList.add(orderItemDO);
         });
-        //如果是部分车票退款
+        //修改订单状态【部分退款/全部退款--可能只退了一个订单中的部分车票】
+        //修改车票状态 为已退款
         if (status.equals(OrderStatusEnum.PARTIAL_REFUND.getStatus())) {
             OrderItemStatusReversalDTO partialRefundOrderItemStatusReversalDTO = OrderItemStatusReversalDTO.builder()
                     .orderSn(orderSn)
