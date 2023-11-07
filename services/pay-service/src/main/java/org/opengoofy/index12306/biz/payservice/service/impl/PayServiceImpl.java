@@ -67,13 +67,15 @@ public class PayServiceImpl implements PayService {
     private final PayResultCallbackOrderSendProduce payResultCallbackOrderSendProduce;
 
     @Transactional(rollbackFor = Exception.class)
-    @Override
+    @Override//通过策略模式调用支付接口，返回一个支付的html页面
     public PayRespDTO commonPay(PayRequest requestParam) {
         /**
          * {@link AliPayNativeHandler}
          */
         // 策略模式：通过策略模式封装支付渠道和支付场景，用户支付时动态选择对应的支付组件
+        //返回一个页面
         PayResponse result = abstractStrategyChoose.chooseAndExecuteResp(requestParam.buildMark(), requestParam);
+        //插入一个支付记录
         PayDO insertPay = BeanUtil.convert(requestParam, PayDO.class);
         String paySn = PayIdGeneratorManager.generateId(requestParam.getOrderSn());
         insertPay.setPaySn(paySn);
@@ -84,6 +86,7 @@ public class PayServiceImpl implements PayService {
             log.error("支付单创建失败，支付聚合根：{}", JSON.toJSONString(requestParam));
             throw new ServiceException("支付单创建失败");
         }
+        //返回页面
         return BeanUtil.convert(result, PayRespDTO.class);
     }
 

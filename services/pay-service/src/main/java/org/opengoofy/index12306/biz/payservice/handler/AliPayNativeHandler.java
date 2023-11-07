@@ -47,7 +47,6 @@ import org.springframework.stereotype.Service;
 /**
  * 阿里支付组件
  *
- * @公众号：马丁玩编程，回复：加群，添加马哥微信（备注：12306）获取项目资料
  */
 @Slf4j
 @Service
@@ -58,6 +57,7 @@ public class AliPayNativeHandler extends AbstractPayHandler implements AbstractE
 
     @SneakyThrows(value = AlipayApiException.class)
     @Override
+    //发生异常时重试3次 调用第三方支付
     @Retryable(value = ServiceException.class, maxAttempts = 3, backoff = @Backoff(delay = 1000, multiplier = 1.5))
     public PayResponse pay(PayRequest payRequest) {
         AliPayRequest aliPayRequest = payRequest.getAliPayRequest();
@@ -69,7 +69,7 @@ public class AliPayNativeHandler extends AbstractPayHandler implements AbstractE
         model.setSubject(aliPayRequest.getSubject());
         model.setProductCode("FAST_INSTANT_TRADE_PAY");
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-        request.setNotifyUrl(aliPayProperties.getNotifyUrl());
+        request.setNotifyUrl(aliPayProperties.getNotifyUrl());//设置支付成功的回调地址
         request.setBizModel(model);
         try {
             AlipayTradePagePayResponse response = alipayClient.pageExecute(request);

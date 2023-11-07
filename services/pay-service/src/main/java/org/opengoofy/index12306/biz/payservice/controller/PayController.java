@@ -46,12 +46,14 @@ public class PayController {
     private final PayService payService;
 
     /**
-     * 公共支付接口
+     * 公共支付接口【根据参数从第三方支付平台获取一个支付页面】
      * 对接常用支付方式，比如：支付宝、微信以及银行卡等
+     * 前端点击支付宝或微信时跳转到第三方支付环境
      */
     @PostMapping("/api/pay-service/pay/create")
     public Result<PayRespDTO> pay(@RequestBody PayCommand requestParam) {
         PayRequest payRequest = PayRequestConvert.command2PayRequest(requestParam);
+        //返回一个支付的html页面
         PayRespDTO result = payService.commonPay(payRequest);
         return Results.success(result);
     }
