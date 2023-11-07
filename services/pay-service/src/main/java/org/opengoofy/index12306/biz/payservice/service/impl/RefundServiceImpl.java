@@ -73,6 +73,7 @@ public class RefundServiceImpl implements RefundService {
     @Transactional
     public RefundRespDTO commonRefund(RefundReqDTO requestParam) {
         RefundRespDTO refundRespDTO = null;
+        //获取订单信息
         LambdaQueryWrapper<PayDO> queryWrapper = Wrappers.lambdaQuery(PayDO.class)
                 .eq(PayDO::getOrderSn, requestParam.getOrderSn());
         PayDO payDO = payMapper.selectOne(queryWrapper);
@@ -84,7 +85,7 @@ public class RefundServiceImpl implements RefundService {
         //创建退款单
         RefundCreateDTO refundCreateDTO = BeanUtil.convert(requestParam, RefundCreateDTO.class);
         refundCreateDTO.setPaySn(payDO.getPaySn());
-        createRefund(refundCreateDTO);
+        createRefund(refundCreateDTO);//为每张车票创建退款单
         /**
          * {@link AliRefundNativeHandler}
          */
@@ -92,8 +93,10 @@ public class RefundServiceImpl implements RefundService {
         RefundCommand refundCommand = BeanUtil.convert(payDO, RefundCommand.class);
         refundCommand.setPayAmount(new BigDecimal(requestParam.getRefundAmount()));
         RefundRequest refundRequest = RefundRequestConvert.command2RefundRequest(refundCommand);
+        //执行退款处理器
         RefundResponse result = abstractStrategyChoose.chooseAndExecuteResp(refundRequest.buildMark(), refundRequest);
         payDO.setStatus(result.getStatus());
+        //更新订单状态为退款状态
         LambdaUpdateWrapper<PayDO> updateWrapper = Wrappers.lambdaUpdate(PayDO.class)
                 .eq(PayDO::getOrderSn, requestParam.getOrderSn());
         int updateResult = payMapper.update(payDO, updateWrapper);
@@ -101,6 +104,7 @@ public class RefundServiceImpl implements RefundService {
             log.error("修改支付单退款结果失败，支付单信息：{}", JSON.toJSONString(payDO));
             throw new ServiceException("修改支付单退款结果失败");
         }
+        //更改退款记录状态
         LambdaUpdateWrapper<RefundDO> refundUpdateWrapper = Wrappers.lambdaUpdate(RefundDO.class)
                 .eq(RefundDO::getOrderSn, requestParam.getOrderSn());
         RefundDO refundDO = new RefundDO();
@@ -112,6 +116,7 @@ public class RefundServiceImpl implements RefundService {
             throw new ServiceException("修改退款单退款结果失败");
         }
         // 退款成功，回调订单服务告知退款结果，修改订单流转状态
+        // 向rocketMQ发送消息
         if (Objects.equals(result.getStatus(), TradeStatusEnum.TRADE_CLOSED.tradeCode())) {
             RefundResultCallbackOrderEvent refundResultCallbackOrderEvent = RefundResultCallbackOrderEvent.builder()
                     .orderSn(requestParam.getOrderSn())

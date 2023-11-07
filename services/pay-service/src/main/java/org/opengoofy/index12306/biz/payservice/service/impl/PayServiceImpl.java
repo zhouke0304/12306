@@ -137,6 +137,7 @@ public class PayServiceImpl implements PayService {
     public RefundRespDTO commonRefund(RefundReqDTO requestParam) {
         LambdaQueryWrapper<PayDO> queryWrapper = Wrappers.lambdaQuery(PayDO.class)
                 .eq(PayDO::getOrderSn, requestParam.getOrderSn());
+        //获取订单信息
         PayDO payDO = payMapper.selectOne(queryWrapper);
         if (Objects.isNull(payDO)) {
             log.error("支付单不存在，orderSn：{}", requestParam.getOrderSn());
@@ -148,7 +149,9 @@ public class PayServiceImpl implements PayService {
         // 策略模式：通过策略模式封装退款渠道和退款场景，用户退款时动态选择对应的退款组件
         RefundCommand refundCommand = BeanUtil.convert(payDO, RefundCommand.class);
         RefundRequest refundRequest = RefundRequestConvert.command2RefundRequest(refundCommand);
+        //从策略容器中选择退款处理器处理退款请求
         RefundResponse result = abstractStrategyChoose.chooseAndExecuteResp(refundRequest.buildMark(), refundRequest);
+        //跟新订单状态
         payDO.setStatus(result.getStatus());
         LambdaUpdateWrapper<PayDO> updateWrapper = Wrappers.lambdaUpdate(PayDO.class)
                 .eq(PayDO::getOrderSn, requestParam.getOrderSn());

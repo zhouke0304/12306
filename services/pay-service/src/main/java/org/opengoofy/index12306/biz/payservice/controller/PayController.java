@@ -36,8 +36,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 支付控制层
- *
- * @公众号：马丁玩编程，回复：加群，添加马哥微信（备注：12306）获取项目资料
  */
 @RestController
 @RequiredArgsConstructor
@@ -46,11 +44,11 @@ public class PayController {
     private final PayService payService;
 
     /**
-     * 公共支付接口【根据参数从第三方支付平台获取一个支付页面】
+     * 公共支付接口【根据参数从第三方支付平台获取一个支付页面，页面中有支付金额和支付成功后的跳转地址】
      * 对接常用支付方式，比如：支付宝、微信以及银行卡等
      * 前端点击支付宝或微信时跳转到第三方支付环境
      */
-    @PostMapping("/api/pay-service/pay/create")
+    @PostMapping("/api/pay-service/pay/create")//创建支付页面
     public Result<PayRespDTO> pay(@RequestBody PayCommand requestParam) {
         PayRequest payRequest = PayRequestConvert.command2PayRequest(requestParam);
         //返回一个支付的html页面
@@ -59,7 +57,7 @@ public class PayController {
     }
 
     /**
-     * 跟据订单号查询支付单详情
+     * 跟据订单号查询支付记录
      */
     @GetMapping("/api/pay-service/pay/query/order-sn")
     public Result<PayInfoRespDTO> getPayInfoByOrderSn(@RequestParam(value = "orderSn") String orderSn) {
@@ -67,7 +65,7 @@ public class PayController {
     }
 
     /**
-     * 跟据支付流水号查询支付单详情
+     * 跟据支付流水号【雪花+订单号后六位】查询支付记录
      */
     @GetMapping("/api/pay-service/pay/query/pay-sn")
     public Result<PayInfoRespDTO> getPayInfoByPaySn(@RequestParam(value = "paySn") String paySn) {
