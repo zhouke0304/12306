@@ -3,12 +3,12 @@ spring:
     gateway:
       routes:
         - id: index12306-user-aggregation-service
-          uri: lb://index12306-aggregation${unique-name:}-service/api/user-service/**
+          uri: lb://index12306-aggregation${unique-name:}-service/api/user-service/** #负载均衡到哪里  /api/user-service/**表示请求必须和这个匹配，和predicates设置相同
           predicates:
-            - Path=/api/user-service/**
-          filters:
+            - Path=/api/user-service/**  #过滤哪些请求
+          filters:  #转发请求前要做的过滤操作 过滤器链
             - name: TokenValidate
-              args:
+              args: # 转发请求时携带的参数
                 blackPathPre:
                   - /api/user-service/passenger
                   - /api/user-service/query
